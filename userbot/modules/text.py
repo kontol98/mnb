@@ -29,7 +29,6 @@ async def _(event):
                     from_users=1171565679 ))
             await bot.forward_messages(chat, reply_message)
             response = await response
-            response2 = await response2
         except YouBlockedUserError:
             await event.reply("`Please unblock   and try again`")
             return
@@ -37,7 +36,6 @@ async def _(event):
             await event.edit("`can you kindly disable your forward privacy settings for good?`")
         else:
             await event.edit(f"```{response.message.message}```")
-            await event.edit(f"```{response2.message.message}```") 
 
 
 CMD_HELP.update({
