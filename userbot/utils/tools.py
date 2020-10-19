@@ -1,9 +1,30 @@
+# Copyright (C) 2020 Adek Maulana
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 
 import re
 import hashlib
+import asyncio
+import shlex
 import os
+from os.path import basename
 import os.path
-from userbot import bot, TEMP_DOWNLOAD_DIRECTORY
+from typing import Optional, Tuple
+from userbot import bot, LOGS
+
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantCreator, DocumentAttributeFilename
 
@@ -71,19 +92,32 @@ async def is_admin(chat_id, user_id):
     return False
 
 
-async def take_screen_shot(video_file: str, duration: int, path: str) -> str:
-    _LOG.info(
+async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
+    """ run command in terminal """
+    args = shlex.split(cmd)
+    process = await asyncio.create_subprocess_exec(*args,
+                                                   stdout=asyncio.subprocess.PIPE,
+                                                   stderr=asyncio.subprocess.PIPE)
+    stdout, stderr = await process.communicate()
+    return (stdout.decode('utf-8', 'replace').strip(),
+            stderr.decode('utf-8', 'replace').strip(),
+            process.returncode,
+            process.pid)
+
+
+async def take_screen_shot(video_file: str, duration: int, path: str = '') -> Optional[str]:
+    """ take a screenshot """
+    LOGS.info(
         '[[[Extracting a frame from %s ||| Video duration => %s]]]',
         video_file,
         duration)
     ttl = duration // 2
     thumb_image_path = path or os.path.join(
-        TEMP_DOWNLOAD_DIRECTORY,
-        f"{basename(video_file)}.jpg")
+        "./temp/", f"{basename(video_file)}.jpg")
     command = f"ffmpeg -ss {ttl} -i '{video_file}' -vframes 1 '{thumb_image_path}'"
     err = (await runcmd(command))[1]
     if err:
-        _LOG.error(err)
+        LOGS.error(err)
     return thumb_image_path if os.path.exists(thumb_image_path) else None
 
 
