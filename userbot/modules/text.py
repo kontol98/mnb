@@ -15,7 +15,7 @@ async def _(event):
     # if not reply_message.text:
     # await event.edit("```reply to text message```")
     # return
-    chat = "@imagereaderbot"
+    chat = "@SmartFileUtilsBot"
     reply_message.sender
     if reply_message.sender.bot:
         await event.edit("`Reply to actual users message.`")
@@ -26,7 +26,7 @@ async def _(event):
             response = conv.wait_event(
                 events.NewMessage(
                     incoming=True,
-                    from_users=753777594 ))
+                    from_users=1171565679 ))
             await bot.forward_messages(chat, reply_message)
             response = await response
             response2 = await response2
