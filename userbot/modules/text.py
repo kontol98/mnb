@@ -22,7 +22,7 @@ reply to text message
     if reply_message.sender.bot:
         await event.edit("Reply to actual users message.")
         return
-    await event.edit("Scanning")
+    await event.edit("Scanning...")
     async with bot.conversation(chat) as conv:
         try:
             r1 = await conv.get_response()
@@ -34,9 +34,7 @@ reply to text message
         if r1.text.startswith("Forward"):
             await event.edit("can you kindly disable your forward privacy settings for good?")
         else:
-            await event.edit(f"
-{r2.message.message}
-")
+            await event.edit(f"{r2.message.message}")
 
 
 CMD_HELP.update({
