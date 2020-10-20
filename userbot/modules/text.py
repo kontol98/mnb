@@ -4,14 +4,10 @@ from userbot.events import register
 from userbot import bot, CMD_HELP
 
 
-@register(outgoing=True, pattern="^.text(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.sa(?: |$)(.*)")
 async def _(text):
     if text.fwd_from:
         return
-    if not text.reply_to_msg_id:
-        await text.edit("Reply to any user message.")
-        return
-    reply_message = await text.get_reply_message()
     if not text.reply_to_msg_id:
         await text.edit("```Reply to any user message.```")
         return
