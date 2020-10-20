@@ -5,36 +5,38 @@ from userbot import bot, CMD_HELP
 
 
 @register(outgoing=True, pattern="^.text(?: |$)(.*)")
-async def _(event):
-    if event.fwd_from:
+async def _(text):
+    if text.fwd_from:
         return
-    if not event.reply_to_msg_id:
-        await event.edit("Reply to any user message.")
+    if not text.reply_to_msg_id:
+        await text.edit("Reply to any user message.")
         return
-    reply_message = await event.get_reply_message()
+    reply_message = await text.get_reply_message()
     # if not reply_message.text:
-    # await event.edit("
+    # await text.edit("
 reply to text message
 ")
     # return
     chat = "@SmartFileUtilsBot"
     reply_message.sender
     if reply_message.sender.bot:
-        await event.edit("Reply to actual users message.")
+        await text.edit("Reply to actual users message.")
         return
-    await event.edit("Scanning...")
+    await text.edit("Scanning")
     async with bot.conversation(chat) as conv:
         try:
             r1 = await conv.get_response()
             r2 = await conv.get_response()
             await bot.forward_messages(chat, reply_message)
         except YouBlockedUserError:
-            await event.reply("Please unblock   and try again")
+            await text.reply("Please unblock   and try again")
             return
         if r1.text.startswith("Forward"):
-            await event.edit("can you kindly disable your forward privacy settings for good?")
+            await text.edit("can you kindly disable your forward privacy settings for good?")
         else:
-            await event.edit(f"{r2.message.message}")
+            await text.edit(f"
+{r2.message.message}
+")
 
 
 CMD_HELP.update({
