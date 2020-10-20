@@ -12,11 +12,9 @@ async def _(text):
         await text.edit("Reply to any user message.")
         return
     reply_message = await text.get_reply_message()
-    # if not reply_message.text:
-    # await text.edit("
-reply to text message
-")
-    # return
+    if not steal.reply_to_msg_id:
+        await steal.edit("```Reply to any user message.```")
+        return
     chat = "@SmartFileUtilsBot"
     reply_message.sender
     if reply_message.sender.bot:
