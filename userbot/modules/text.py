@@ -4,37 +4,40 @@ from userbot.events import register
 from userbot import bot, CMD_HELP
 
 
-@register(outgoing=True, pattern=r"^\.sa(?: |$)(.*)")
-async def _(text):
-    if text.fwd_from:
+@register(outgoing=True, pattern="^.text(?: |$)(.*)")
+async def _(event):
+    if event.fwd_from:
         return
-    if not text.reply_to_msg_id:
-        await text.edit("```Reply to any user message.```")
+    if not event.reply_to_msg_id:
+        await event.edit("Reply to any user message.")
+        return
+    reply_message = await event.get_reply_message()
+    if not reply_message.media:
+        await event.edit("reply to text message")
         return
     chat = "@SmartFileUtilsBot"
-    reply_message.sender
     if reply_message.sender.bot:
-        await text.edit("Reply to actual users message.")
+        await event.edit("Reply to actual users message.")
         return
-    await text.edit("Scanning")
+    await event.edit("Scanning")
     async with bot.conversation(chat) as conv:
         try:
+            await conv.send_message(reply_message)
             r1 = await conv.get_response()
-            r2 = await conv.get_response()
-            await bot.forward_messages(chat, reply_message)
         except YouBlockedUserError:
-            await text.reply("Please unblock   and try again")
+            await event.reply("Please unblock   and try again")
             return
         if r1.text.startswith("Forward"):
-            await text.edit("can you kindly disable your forward privacy settings for good?")
+            return await event.edit("can you kindly disable your forward privacy settings for good?")
+        elif r1.text.startswith("Extraction..."):
+            r2 = await conv.get_response()
+            await event.edit(f"{r2.message}")
         else:
-            await text.edit(f"
-{r2.message.message}
-")
+            return await event.edit("Bug lol!")
 
 
 CMD_HELP.update({
     "text":
-        ".text \
-          \n image to text .\n"
+        ".text"
+        "\n image to text .\n"
 })
