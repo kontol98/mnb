@@ -19,7 +19,7 @@ async def _(event):
     if reply_message.sender.bot:
         await event.edit("Reply to actual users message.")
         return
-    await event.edit("Scanning")
+    await event.edit("```Scanning...```")
     async with bot.conversation(chat) as conv:
         try:
             await conv.send_message(reply_message)
