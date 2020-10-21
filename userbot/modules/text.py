@@ -16,8 +16,16 @@ async def _(event):
         await event.edit("reply to text message")
         return
     chat = "@SmartFileUtilsBot"
-    if reply_message.sender.bot:
-        await event.edit("Reply to actual users message.")
+
+    img = await event.get_reply_message()
+    if not img.document:
+        await event.edit("`Reply ke suatu stiker...`")
+        return False
+
+    try:
+        img.document.attributes[1]
+    except Exception:
+        await event.edit("`Ini bukan sticker...`")
         return
     await event.edit("```Scanning...```")
     async with bot.conversation(chat) as conv:
