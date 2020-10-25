@@ -21,5 +21,4 @@ async def _(event):
             await event.reply("Unblock @SaitamaRobot plox")
             return
         else:
-            await event.edit(f"
-{response.message.message}
+            await event.edit(f"{response.message.message}
