@@ -20,18 +20,15 @@ async def _(event):
         except YouBlockedUserError:
             await event.reply("Unblock @Rajinnulis12_bot plox")
             return
+        await conv.send_message(reply_message)
+            r1 = await conv.get_response()
+        except YouBlockedUserError:
+            await event.reply("Please unblock   and try again")
+            return
+        if r1.text.startswith("Forward"):
+            return await event.edit("can you kindly disable your forward privacy settings for good?")
+        elif r1.text.startswith("Harap Tunggu, Bot Sedang Menulis Buku 1!~"):
+            r2 = await conv.get_response()
+            await event.edit(f"{r2.message}")
         else:
-            downloaded_file_name = await event.client.download_media(
-                                 response.media,
-                                 TEMP_DOWNLOAD_DIRECTORY
-            )
-            await event.client.send_file(
-                event.chat_id,
-                downloaded_file_name,
-                force_document=False,
-            )
-            """ - cleanup chat after completed - """
-            await event.client.delete_messages(conv.chat_id,
-                                               [msg.id, response.id])
-    await event.delete()
-    return os.remove(downloaded_file_name)
+            return await event.edit("Bug lol!")
