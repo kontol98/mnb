@@ -3,7 +3,7 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 from userbot import bot, TEMP_DOWNLOAD_DIRECTORY
 from userbot.events import register
 
-@register(outgoing=True, pattern=r"^\.nulis(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.wall(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -18,17 +18,8 @@ async def _(event):
             await conv.send_message(f"/magernulis1 {link}")
             response = await response
         except YouBlockedUserError:
-            await event.reply("Unblock @Rajinnulis12_bot plox")
+            await event.reply("Unblock @SaitamaRobot plox")
             return
-        await conv.send_message(reply_message)
-            r1 = await conv.get_response()
-        except YouBlockedUserError:
-            await event.reply("Please unblock   and try again")
-            return
-        if r1.text.startswith("Forward"):
-            return await event.edit("can you kindly disable your forward privacy settings for good?")
-        elif r1.text.startswith("Harap Tunggu, Bot Sedang Menulis Buku 1!~"):
-            r2 = await conv.get_response()
-            await event.edit(f"{r2.message}")
         else:
-            return await event.edit("Bug lol!")
+            await event.edit(f"
+{response.message.message}
