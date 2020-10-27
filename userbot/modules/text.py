@@ -28,7 +28,7 @@ async def _(event):
             return await event.edit("can you kindly disable your forward privacy settings for good?")
         elif r1.text.startswith("Extraction..."):
             r2 = await conv.get_response()
-            await event.edit(f"{r2.message}")
+            await event.edit(f"```{r2.message}```")
         else:
             return await event.edit("Bug lol!")
 
