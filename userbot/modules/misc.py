@@ -101,7 +101,7 @@ async def repo_is_here(wannasee):
 @register(outgoing=True, pattern=r"^\.dana$")
 async def dana(wannasee):
     await wannasee.edit(
-        "Mau Saldo Dana GRATIS? buruan Klik [Di Sini](https://t.me/SALDODANAGRATIS2020_Bot?start=r08367623110) "
+        "Mau Saldo Dana GRATIS? buruan Klik [Di Sini](https://t.me/Danarecehan_Bot?start=r08367623110) "
     )
 
 @register(outgoing=True, pattern=r"^\.raw$")
