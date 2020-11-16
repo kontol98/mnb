@@ -98,7 +98,7 @@ async def repo_is_here(wannasee):
         "[Here](https://github.com/alfianandaa/ProjectAlf) is ProjectAlf repo."
     )
 
-@register(outgoing=True, pattern=r"^\.repo$")
+@register(outgoing=True, pattern=r"^\.dana$")
 async def dana(wannasee):
     await wannasee.edit(
         "Mau cari duid/ dana GRATIS? \n [Di Sini](https://t.me/SALDODANAGRATIS2020_Bot?start=r08367623110) "
