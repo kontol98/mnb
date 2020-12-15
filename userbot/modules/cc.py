@@ -23,7 +23,5 @@ async def _(event):
               await event.reply("```Unblock @cc_pebot plox```")
               return
           else:
-             await event.delete()
-             await bot.forward_messages(event.chat_id, response.message)
-                
-                
+             await event.edit(f"{response.message.message}")
+                await bot.send_read_acknowledge(conv.chat_id)
