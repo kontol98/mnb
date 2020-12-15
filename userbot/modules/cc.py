@@ -6,7 +6,7 @@ from telethon.tl.functions.account import UpdateNotifySettingsRequest
 from userbot import bot
 from userbot.events import register
 
-@register(outgoing=True, pattern="^\.cc(?: |$)(.*)")
+@register(outgoing=True, pattern="^\/cc(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
