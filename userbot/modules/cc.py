@@ -24,4 +24,4 @@ async def _(event):
               return
           else:
              await event.edit(f"{response.message.message}")
-                await bot.send_read_acknowledge(conv.chat_id)
+             await bot.send_read_acknowledge(conv.chat_id)
