@@ -3,7 +3,7 @@ import datetime
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.account import UpdateNotifySettingsRequest
-from userbot import bot
+from userbot import bot, CMD_HELP
 from userbot.events import register
 
 @register(outgoing=True, pattern="^\/cc(?: |$)(.*)")
@@ -25,3 +25,10 @@ async def _(event):
           else:
              await event.edit(f"{response.message.message}")
              await bot.send_read_acknowledge(conv.chat_id)
+
+CMD_HELP.update(
+    {
+        "cc": ">`/cc` \
+          \nUsage: cc Checker Live Or Die .\n"
+    }
+)
