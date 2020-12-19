@@ -9,12 +9,12 @@ from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import MessageEntityMentionName
 from telethon.utils import get_input_location
-from userbot.utils import admin_cmd
+from userbot.events import register
 from telethon.tl import functions
 
 
-@borg.on(admin_cmd(pattern="clone ?(.*)"))
-async def _(event):
+@register(outgoing=True, pattern=r"^\.clone ?(.*)")
+async def anime(event):
     if event.fwd_from:
         return
     reply_message = await event.get_reply_message()
